@@ -2,8 +2,6 @@ package com.example.demo.repository;
 
 
 
-import java.io.InputStream;
-import java.util.List;
 
 import com.example.demo.entity.Atmosphere;
 
