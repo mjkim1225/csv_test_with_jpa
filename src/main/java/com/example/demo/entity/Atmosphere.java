@@ -1,6 +1,5 @@
 package com.example.demo.entity ;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -80,11 +79,10 @@ public class Atmosphere {
     private Double ph3;
     @Column(columnDefinition = "NUMERIC(20,10)")
     private Double cl2;
-
-
     
-    @CreationTimestamp
-    private Date measureTime;
+    // @CreationTimestamp
+    @Column(name="measure_time")
+    private String measureTime;
     
     
     

@@ -1,6 +1,6 @@
 create table ATMOSPHERE(
     atmosphere_id serial PRIMARY KEY,
-    measure_time timestamp,
+    measure_time varchar(50),
     altitude numeric(20,10),
     lat numeric(20,10),
     lon numeric(20,10),
