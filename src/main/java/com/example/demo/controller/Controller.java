@@ -127,7 +127,6 @@ public class Controller {
 
                 System.out.println(field[1]);
 
-                System.out.println(field[2]);
 
                 break;
 
