@@ -18,6 +18,7 @@ import java.util.List;
 
 import com.example.demo.entity.Atmosphere;
 import com.example.demo.entity.CsvUtils;
+import com.example.demo.entity.DroneProjectInfo;
 import com.example.demo.service.AtmosService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,10 @@ public class Controller {
     @Autowired
     AtmosService atmosService;
 
-    @PostMapping(value = "/upload2", consumes = "multipart/form-data")
-    public String uploadMultipart2(@RequestParam("file") MultipartFile file) {
-    Date before = new Date();
-    File newFile = new File("testForAPI.csv");
+    @PostMapping(value = "/atmosphere", consumes = "multipart/form-data")
+    public String uploadAtmosphere(@RequestParam("file") MultipartFile file) {
+        Date before = new Date();
+        File newFile = new File("testForAPI.csv");
 
         try {
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
@@ -87,8 +88,17 @@ public class Controller {
     }
 
 
-    // 그 다음에 이제 프로젝트
+    // 그 다음에 이제 프로젝트 만들기
+    @PostMapping(value = "/droneproject", consumes = "multipart/form-data")
+    public String uploadDroneProjectInfo(@RequestParam DroneProjectInfo  droneProjectInfo) {
+        Date before = new Date();
+   
 
+        Date after = new Date(); 
+
+        return (before+",\n "+after);
+
+    }
 
 
 }

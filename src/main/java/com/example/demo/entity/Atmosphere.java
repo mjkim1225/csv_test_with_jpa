@@ -25,7 +25,7 @@ public class Atmosphere {
     @GeneratedValue(generator = "generator") 
     @GenericGenerator(name = "generator", strategy = "increment")
     @Column(name="atmosphere_id")
-    public int id;
+    private int id;
 
     @Column(columnDefinition = "NUMERIC(20,10)")
     public Double altitude;  
