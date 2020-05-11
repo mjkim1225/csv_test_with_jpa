@@ -19,8 +19,6 @@
 		<!-- <m2e.apt.activation>disabled</m2e.apt.activation> -->
 	</properties>
 
-
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
