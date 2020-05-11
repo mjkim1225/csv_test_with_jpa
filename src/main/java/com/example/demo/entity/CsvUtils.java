@@ -25,4 +25,9 @@ public class CsvUtils {
 
         return atmos;
     }
+
+    public static void appending(StringBuilder sb) {
+        sb.append("measureTime,altitude,lon,lat,temperature,humidity,pressure,vocs,so2,co,no2,o3no2,pm1,pm25,pm10,cxhy,h2s,hcl,wrSo2,tsp,nh3,co2,hcn,h2,ph3,cl2,");
+        sb.append('\n');
+    }
 }

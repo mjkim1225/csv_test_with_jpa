@@ -2,12 +2,19 @@ package com.example.demo;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.example.demo.entity.Atmosphere;
+import com.example.demo.entity.CsvUtils;
 import com.example.demo.repository.AtmosRepository;
+import com.example.demo.service.AtmosService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +31,80 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class FileRepositoryTest {
 
     @Autowired
-    private  AtmosRepository atmosRepository;
+    AtmosService atmosService;
 
 
     
     @Test
     public void test(){
-
-        System.out.println("dddddddddddddddddddddd");
+        System.out.println("start@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        
+        ArrayList<String> csvFile = run("C:\\test.csv", "utf-8");
+        
+        System.out.println("사이즈는: "+csvFile.size());
 
     }
+
+
+    private ArrayList<String> run(String path, String encoding) {
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        CsvUtils.appending(sb);
+
+        ArrayList<String> csvFile = new ArrayList<>();
+        File newFile = new File("testForLocalFile.csv");
+
+        try {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(path), encoding));
+
+            while(true){
+                String line = br.readLine();
+                if(line==null) break;
+                System.out.println("line  : "+line);
+                if(line.startsWith("2")) {
+                    sb.append(line);
+                    sb.append('\n');
+                    csvFile.add(line);
+                }
+                
+            }
+            
+            try (PrintWriter writer = new PrintWriter(newFile) ) {
+                writer.write(sb.toString());
+                System.out.println("done!");
+            } catch (FileNotFoundException e) {
+                System.out.println("inside : "+e.getMessage());
+            }
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                List<Atmosphere> atmos = CsvUtils.read(Atmosphere.class, new FileInputStream(newFile));    
+                atmosService.saveAll(atmos);
+                
+            } catch (Exception e) {
+                System.out.println("**예외"+ e.toString()); 
+            }
+        }
+
+
+
+
+        return csvFile;
+    }
+
+
+}
+
+
+
+    
+
 
 
 
@@ -61,39 +132,3 @@ public class FileRepositoryTest {
 
 
     // }
-
-    // private static void run(String path, String encoding) {
-    //     BufferedReader br = null;
-    //     String line;
-    //     String cvsSplitBy = ",";
-
-    //     try {
-    //         br = new BufferedReader(new InputStreamReader(new FileInputStream(path), encoding));
-    //         System.out.println("ddddddddddddddddd");
-    //         while ((line = br.readLine()) != null) {
-    //             String[] field = line.split(cvsSplitBy);
-    //             System.out.println(field[0]);
-    //             break;
-    //         }
-    //     } catch (FileNotFoundException e) {
-    //         e.printStackTrace();
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     } finally {
-    //         if (br != null) {
-    //             try {
-    //                 br.close();
-    //             } catch (IOException e) {
-    //                 e.printStackTrace();
-    //             }
-    //         }
-    //     }
-    // }
-
-
-}
-
-
-
-    
-

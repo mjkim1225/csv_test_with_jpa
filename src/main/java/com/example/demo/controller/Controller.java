@@ -38,57 +38,40 @@ public class Controller {
     @Autowired
     AtmosService atmosService;
 
-    // jpa repository  
-    // @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    // public void uploadMultipart(@RequestParam("file") MultipartFile file) {
-    //     Date before = new Date();
-    //     try {
-    //         List<Atmosphere> atmos = CsvUtils.read(Atmosphere.class, file.getInputStream());    
-    //         System.out.println("atmos : "+atmos.get(0).getVocs());
-    //         atmosService.saveAll(atmos);
-    //         // 
-    //         Date after = new Date(); 
-    //         System.out.println("시간 before : "+before);
-    //         System.out.println("시간 after : "+after);
-    //     } catch (Exception e) {
-    //         log.info("**예외"+ e.toString()); 
-    //         // e.toString()
-    //     }
-    // }
+    @PostMapping(value = "/upload2", consumes = "multipart/form-data")
+    public String uploadMultipart2(@RequestParam("file") MultipartFile file) {
+    Date before = new Date();
+    File newFile = new File("testForAPI.csv");
 
-     // jpa repository  
-     @PostMapping(value = "/upload2", consumes = "multipart/form-data")
-     public String uploadMultipart2(@RequestParam("file") MultipartFile file) {
-        Date before = new Date();
-        File newFile = new File("test.csv");
+        try {
+        BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
+        StringBuilder sb = new StringBuilder();
 
-         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-            StringBuilder sb = new StringBuilder();
+        CsvUtils.appending(sb);
 
-            appending(sb);
-
-            while(true){
-                String line = br.readLine();
-                if(line==null) break;
-                if(line.startsWith("2")) {
-                    sb.append(line);
-                    sb.append('\n');
-                }
+        while(true){
+            String line = br.readLine();
+            if(line==null) break;
+            if(line.startsWith("2")) {
+                sb.append(line);
+                sb.append('\n');
             }
             
-            try (PrintWriter writer = new PrintWriter(newFile) ) {
-                writer.write(sb.toString());
-                System.out.println("done!");
-            } catch (FileNotFoundException e) {
-                System.out.println("inside : "+e.getMessage());
-            }
 
-         } catch (Exception e) {
-            System.out.println("outside : "+e.getMessage());   
-         }
-         
+        }
         
+        try (PrintWriter writer = new PrintWriter(newFile) ) {
+            writer.write(sb.toString());
+            System.out.println("done!");
+        } catch (FileNotFoundException e) {
+            System.out.println("inside : "+e.getMessage());
+        }
+
+        } catch (Exception e) {
+        System.out.println("outside : "+e.getMessage());   
+        }
+        
+    
         try {
             List<Atmosphere> atmos = CsvUtils.read(Atmosphere.class, new FileInputStream(newFile));    
             atmosService.saveAll(atmos);
@@ -101,12 +84,10 @@ public class Controller {
 
         return (before+",\n "+after);
 
-     }
+    }
 
-     private void appending(StringBuilder sb) {
-         sb.append("measureTime,altitude,lon,lat,temperature,humidity,pressure,vocs,so2,co,no2,o3no2,pm1,pm25,pm10,cxhy,h2s,hcl,wrSo2,tsp,nh3,co2,hcn,h2,ph3,cl2,");
-         sb.append('\n');
-     }
+
+    // 그 다음에 이제 프로젝트
 
 
 
