@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AtmosService{
 
     @Autowired
-    AtmosRepository atmosRepository;
+    private AtmosRepository atmosRepository;
     
     public void saveAll(List<Atmosphere> atmos) {
         log.info("service 도착");

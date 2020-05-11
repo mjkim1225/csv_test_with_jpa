@@ -91,7 +91,6 @@ public class Controller {
         
         try {
             List<Atmosphere> atmos = CsvUtils.read(Atmosphere.class, new FileInputStream(newFile));    
-            System.out.println("atmos : "+atmos.get(0).getVocs());
             atmosService.saveAll(atmos);
             
         } catch (Exception e) {
@@ -99,8 +98,6 @@ public class Controller {
         }
 
         Date after = new Date(); 
-        // System.out.println("시간 before : "+before);
-        // System.out.println("시간 after : "+after);
 
         return (before+",\n "+after);
 
